@@ -1,6 +1,4 @@
-# Título del trabajo
-
-Fondos para el Ayuntamiento.
+﻿# Fondos para el Ayuntamiento
 
 ## Integrantes del equipo
 Alberto Diaz Bejerano @Alberto1166
