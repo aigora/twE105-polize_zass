@@ -1,9 +1,9 @@
 ﻿# Fondos para el Ayuntamiento
 
 ## Integrantes del equipo
-Alberto Diaz Bejerano @Alberto1166
-Jorge de Miguel Escolar @jorgedemiguele
-Carlos Oliva Arnanz @carlosolivaa
+- Alberto Diaz Bejerano @Alberto1166
+- Jorge de Miguel Escolar @jorgedemiguele
+- Carlos Oliva Arnanz @carlosolivaa
 
 
 ## Objetivos del trabajo
