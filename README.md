@@ -7,5 +7,6 @@
 
 
 ## Objetivos del trabajo
-Reducir los accidentes de trafico creando un programa que al recibir el exceso de velocidad de un vehiculo, segun sea el procentaje de exceso de velocidad (segun el radar que le haya captado) le impondra una sancion mayor o menor.Este programa sabra el dia hora y mes en el que se ha producido dicha infraccion.
-
+Se trata de un programa creado para el control de las multas impuestas por la policía debido al exceso de velocidad o de alcohol.
+Las multas por velocidad podrán cargarse desde un archivo o introducir manualmente indicado el número de radares y el número de multas, las cuales se impondrán dependiendo del porcentaje de velocidad excedido.
+Sin embargo, las multas por alcohol se impondrán diferenciando si el conductor es noble o no.
