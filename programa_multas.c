@@ -1,4 +1,26 @@
 #include<stdio.h>
+//Aqui comienza el menu del programa en el que te deja elegir la funcion del primer programa o la del segundo 
+void main()
+{
+	int op;
+	printf("Elige programa: Multas por velocidad(1) o multas por alcohol(2) \n");
+	scanf("%i", &op);
+	//En caso de no elegir ni la primera ni la segunda vuelve a preguntar 
+	while(op!=1 && op!=2)
+	{
+		printf("Elige programa: Multas por velocidad(1) o multas por alcohol(2) \n");
+		scanf("%i", &op);
+	}
+	switch(op)
+	{
+		case 1:
+			printf("funcion primer programa\n");
+			break;
+		case 2:
+			printf("funcion segundo programa\n");
+				break;
+			}		
+}// FIN DEL MENU
 //Lo primero que que quermos hacer es que el operador introduzca el numero de radares que hay operativos y el numero de multas puestas.
 typedef struct {
    int id_radar;
