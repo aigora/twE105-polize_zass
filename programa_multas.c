@@ -22,21 +22,30 @@ typedef struct {
     int umbralresto;
 }T_RADAR;
 
+typedef struct {
+    char dn1[10];
+    float tasa;
+    float sancion;
+}T_ALCOHOL
+
 // prototipos
 void CargaRadaresManual();
 void CargaMultasManual();
 void RellenarUnRadar(T_RADAR *prad);
 void RellenarUnaMulta(T_MULTA *pmul);
 void RellenarFecha(T_FECHA *pfecha);
+void RellenarMultaAlcohol();
+void CargarMultaAlcohol();
+void CalcularMultaAlcohol();
+
 
 int main(){
     
     int op;
     int n_multas;
     int n_radares;
-    char dni[10];
-    float tasa;
-    char p;
+    int multas_totales;
+    int num_multas;
     
 	//En caso de no elegir ni la primera ni la segunda vuelve a preguntar 
 	do{
@@ -60,7 +69,7 @@ int main(){
                }
            }while(n_radares<=0);
            
-           //pide el numero de ultas y se repite hasta que el numero sea posivo 
+           //pide el numero de multas y se repite hasta que el numero sea posivo 
            do{
                printf("\nIntroduce el numero de multas: ");
                scanf("%d",&n_multas);
@@ -76,44 +85,19 @@ int main(){
 		case 2:
 			printf("\nFuncion segundo programa");
             
-            //pide los datos del conductor
-            printf("\nIntroduce el DNI: ");
-            scanf("%9s", dni);
-            RellenarFecha
-            printf("\nIntroduce la tasa de alcohol del conductor: ");
-            scanf("%f", &tasa);
-            //dependiendo de si el conductor es noble o no se le apican inas tasas de medicion u otras
-            printf("\n¿Es noble o el conductor?: si o no");
-            switch(p){
-                case 'si':
-                if(tasa<0.15){
-                    printf("\nNo tiene sancion administrativa");
-                }else if(tasa>0.15 && tasa<=0.30){
-                    printf("\nMulta de 500 euros");
-                }else if(tasa>0.3 && tasa<=0.6){
-                    printf("\nMulta de 1000 euros");
-                }
-                break;
-                
-                case 'no':
-                if(tasa<0.25){
-                    printf("\nNo tiene sancion administrativa");
-                }else if(tasa>0.25 && tasa<=0.5){
-                    printf("\nMulta de 500 euros");
-                }else if(tasa>0.5 && tasa<=0.6){
-                    printf("\nMulta de 1000 euros");
-                }
-                break;
-                
-                default:
-                printf("\nError");
-            }
-        break;
-        
-        default:
-        printf("\nError");
+            do{
+               printf("\nIntroduce el numero de multas: ");
+               scanf("%d",&n_multas);
+               if(n_multas<=0){
+                   printf("\nDebe ser positivo");
+               }
+           }while(n_multas<=0);
+            
+            CargarMultasAlcohol();
+            
+            multas_totales = CalcularMultaAlcohol();
+            break;
     }
-   
    return 0;
 }
 
@@ -171,4 +155,54 @@ void RellenarFecha(T_FECHA *pfecha){
     printf("\nAnio: ");
     scanf("%d", &(pfecha->anio));
     return;
+}
+
+
+void CargarMultasAlcochol(){
+    int i;
+    for(i=0; i<num_multas; i++){
+        RellenarMultaAlcohol;
+    }
+    return;
+}
+
+void RellenarMultaAlcohol(){
+    RellenarFecha(&fecha);
+    printf("\nIntroduce el dni: ");
+    scanf("%9s", &(pal->dni));
+    printf("\nIntroduce la tasa de alcohol del conductor: ");
+    scanf("%f", &(pal->tasa));
+    return;
+}
+
+void CalcularMultaAlcohol(){
+    char op;
+    printf("\n¿Es noble el conductor?: si o no\n");
+    scanf("%c", &op);
+    
+    switch(op){
+        case 'si':
+                if(tasa<0.15){
+                    multa[i].sancion = 0;
+                }else if(tasa>0.15 && tasa<=0.30){
+                    multa[i].sancion = 500;
+                }else if(tasa>0.3 && tasa<=0.6){
+                    multa[i].sancion = 1000;
+                }
+                break;
+                
+                case 'no':
+                if(tasa<0.25){
+                    multa[i].sancion = 0;
+                }else if(tasa>0.25 && tasa<=0.5){
+                    multa[i].sancion = 500;
+                }else if(tasa>0.5 && tasa<=0.6){
+                    multa[i].sancion = 1000;
+                }
+                break;
+                
+                default:
+                printf("\nError");
+    }
+    break;
 }
