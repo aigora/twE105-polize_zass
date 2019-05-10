@@ -1,6 +1,8 @@
 #include<stdio.h>
+#include <stdlib.h>
+#define N 8
 
-}// estructuras
+// estructuras
 typedef struct {
    int id_radar;
    char matricula[N];
@@ -29,8 +31,8 @@ typedef struct {
 }T_ALCOHOL
 
 // prototipos
-void CargaRadaresManual();
-void CargaMultasManual();
+void CargaRadaresManual(T_RADAR *radares,intnum_radares);
+void CargaMultasManual(T_MULTA *multas,int num_multas);
 void RellenarUnRadar(T_RADAR *prad);
 void RellenarUnaMulta(T_MULTA *pmul);
 void RellenarFecha(T_FECHA *pfecha);
@@ -41,7 +43,9 @@ void CalcularMultaAlcohol();
 
 
 int main(){
-    
+	
+	T_RADAR *v_radares;
+   	T_MULTA *v_multas;
     int op;
     int n_multas;
     int n_radares;
@@ -79,8 +83,20 @@ int main(){
                }
            }while(n_multas<=0);
            
-           CargaRadaresManual();
-           CargaMultasManual();
+               v_radares=(T_RADAR *)calloc(n_radares,sizeof(T_RADAR));
+			   v_multas=(T_MULTA *)calloc(n_multas,sizeof(T_MULTA));
+			   if(v_radares==NULL||v_multas==NULL){
+			       printf("\nError guardando menoria dinamica");
+			   }
+			   else{
+			       CargaRadaresManual(v_radares,n_radares);
+			       CargaMultasManual(v_multas,n_multas);
+			       multas_totales=CalculaMultas(v_multas,n_multas,v_radares,n_radares);
+			       printf("\nEl valor total de la sancion impuesta es: %.2f",multas_totales);
+			       free(v_radares);
+			       free(v_multas);
+			   }
+
 			break;
             
 		case 2:
@@ -145,6 +161,22 @@ void RellenarUnaMulta(T_MULTA *pmul){
     scanf("%d", &(pmul->velocidad));
     return;
 }
+
+int BuscarIndiceRadar(int identificador_radar,T_RADAR*radares,int num_radares)
+{	
+   int i;
+   int indice;
+   indice=-1;
+   i=0;
+   while(i<num_radares&&indice==-1){
+       if(radares[i].id_radar==identificador_radar){
+           indice=i;
+       }
+       i++;
+   }
+   return indice;
+}
+
 
 float CalculaMultas(T_MULTA *multas,intnum_multas,T_RADAR *radares,int num_radares)
 {
