@@ -34,6 +34,7 @@ void CargaMultasManual();
 void RellenarUnRadar(T_RADAR *prad);
 void RellenarUnaMulta(T_MULTA *pmul);
 void RellenarFecha(T_FECHA *pfecha);
+float CalculaMultas(T_MULTA*multas,intnum_multas,T_RADAR*radares,int num_radares);
 void RellenarMultaAlcohol();
 void CargarMultaAlcohol();
 void CalcularMultaAlcohol();
@@ -144,6 +145,43 @@ void RellenarUnaMulta(T_MULTA *pmul){
     scanf("%d", &(pmul->velocidad));
     return;
 }
+
+float CalculaMultas(T_MULTA *multas,intnum_multas,T_RADAR *radares,int num_radares)
+{
+   int i;
+   float res;
+   int indice;
+   int diferencia;
+   float umbral;
+   res=0;
+   for(i=0;i<num_multas;i++){
+       indice=BuscarIndiceRadar(multas[i].id_radar,radares,num_radares);
+       if(indice==-1){
+           printf("\nEl identificador %d no existe",multas[i].id_radar);
+       }
+       else{
+           diferencia=multas[i].velocidad-radares[indice].velocidad_limite;
+           if(diferencia>0){
+               umbral=diferencia*100/(float)radares[indice].velocidad_limite;
+               if(umbral>0&&umbral<=20){
+                   multas[i].sancion=radares[indice].umbral20;
+               }
+               else{
+                   if(umbral>20&&umbral<=40){
+                       multas[i].sancion=radares[indice].umbral40;
+                   }
+                   else{
+                           multas[i].sancion=radares[indice].umbral_resto;
+                   }
+               }
+               res=res+multas[i].sancion;
+               printf("\nLa sancion del vehiculo %s ha sido de %.f euros",multas[i].matricula,multas[i].sancion);
+           }
+       }
+   }
+   return res;
+}
+
 
 
 void RellenarFecha(T_FECHA *pfecha){
