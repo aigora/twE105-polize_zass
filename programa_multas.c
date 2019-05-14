@@ -264,23 +264,24 @@ float CalcularMultaAlcohol(T_ALCOHOL *multas,int num_multas){
     printf("\n¿Es noble el conductor?: s(si la respuesta es SI) o no(si la respuesta es NO)\n");
     scanf("%c", &op);
     
+    //no se si poner el bucle for fuera del switch o dentro de cada caso para q recorra las multas indicadas anteriormente
     switch(op){
         case 's':
-                if(tasa<0.15){
+                if(multas[i].tasa<0.15){
                     multas[i].sancion = 0;
-                }else if(tasa>0.15 && tasa<=0.30){
+                }else if(multas[i].tasa>0.15 && multas[i].tasa<=0.30){
                     multas[i].sancion = 500;
-                }else if(tasa>0.3 && tasa<=0.6){
+                }else if(multas[i].tasa>0.3 && multas[i].tasa<=0.6){
                     multas[i].sancion = 1000;
                 }
                 break;
                 
         case 'n':
-                if(tasa<0.25){
+                if(multas[i].tasa<0.25){
                     multas[i].sancion = 0;
-                }else if(tasa>0.25 && tasa<=0.5){
+                }else if(multas[i].tasa>0.25 && multas[i].tasa<=0.5){
                     multas[i].sancion = 500;
-                }else if(tasa>0.5 && tasa<=0.6){
+                }else if(multas[i].tasa>0.5 && multas[i].tasa<=0.6){
                     multas[i].sancion = 1000;
                 }
                 break;
