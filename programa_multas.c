@@ -306,7 +306,7 @@ float CalcularMultaAlcohol(T_ALCOHOL *multas,int num_multas){
     return res;
 }
 
-void pedirDni(T_ALCOHOL *palc){
+void pedirDni(T_ALCOHOL *palc){ //Te pide el dni y comprueba si el dni es correcto o no , sino te le pide hasta que sea un dni valido
     int dniIncorrecto=1;
     do {
         printf("\nIntroduce el dni (Con letra mayuscula): ");
