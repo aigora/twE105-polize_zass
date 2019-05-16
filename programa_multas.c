@@ -4,16 +4,16 @@
 
 // estructuras
 typedef struct {
-   int id_radar;
-   char matricula[N];
-   int velocidad;
-   float sancion;
+    int id_radar;
+    char matricula[N];
+    int velocidad;
+    float sancion;
 }T_MULTA;
 
 typedef struct {
-   int dia;
-   int mes;
-   int anio;
+    int dia;
+    int mes;
+    int anio;
 }T_FECHA;
 
 typedef struct {
@@ -27,6 +27,7 @@ typedef struct {
 typedef struct {
     char dni[10];
     float tasa;
+    int nobel;
     float sancion;
 }T_ALCOHOL;
 
@@ -37,95 +38,95 @@ void RellenarUnRadar(T_RADAR *prad);
 void RellenarUnaMulta(T_MULTA *pmul);
 void RellenarFecha(T_FECHA *pfecha);
 float CalculaMultas(T_MULTA *multas, int num_multas, T_RADAR *radares, int num_radares);
-int BuscarIndiceRadar(int identificador_radar, T_RADAR *radares, int num_radares); 
+int BuscarIndiceRadar(int identificador_radar, T_RADAR *radares, int num_radares);
 void RellenarMultaAlcohol(T_ALCOHOL *palc);
 void CargarMultaAlcohol(T_ALCOHOL *multas, int num_multas);
-float CalcularMultaAlcohol(T_MULTA *multas, int num_multas);
+float CalcularMultaAlcohol(T_ALCOHOL *multas, int num_multas);
 
 
-int main(){
-	
-	T_RADAR *v_radares;
-   	T_MULTA *v_multas;
+int main() {
+
+    T_RADAR *v_radares;
+    T_MULTA *v_multas;
     int op;
     int n_multas;
     int n_radares;
     float multas_totales;
-    
-	//En caso de no elegir ni la primera ni la segunda vuelve a preguntar 
-	do{
-		printf("Elige programa: Multas por velocidad(1) o multas por alcohol(2) \n");
-		scanf("%i", &op);
-        if(op!=1 && op!=2){
+
+    //En caso de no elegir ni la primera ni la segunda vuelve a preguntar
+    do {
+        printf("Elige programa: Multas por velocidad(1) o multas por alcohol(2) \n");
+        scanf(" %i", &op);
+        if (op != 1 && op != 2) {
             printf("Error, el programa selecionado no existe\n\n");
         }
-	}while(op!=1 && op!=2);
-	
-    switch(op){
-		case 1:
-			printf("\nFuncion primer programa");
-            
+    } while (op != 1 && op != 2);
+
+    switch (op) {
+        case 1:
+            printf("\nFuncion primer programa");
+
             //pide el numero de radares y se repite hasta que sea un numero positivo
-            do{
-               printf("\nIntroduce el numero de radares: ");
-               scanf("%d",&n_radares);
-               if(n_radares<=0){
-                   printf("\nDebe ser positivo");
-               }
-           }while(n_radares<=0);
-           
-           //pide el numero de multas y se repite hasta que el numero sea posivo 
-           do{
-               printf("\nIntroduce el numero de multas: ");
-               scanf("%d",&n_multas);
-               if(n_multas<=0){
-                   printf("\nDebe ser positivo");
-               }
-           }while(n_multas<=0);
-           
-               v_radares=(T_RADAR *)calloc(n_radares,sizeof(T_RADAR));
-			   v_multas=(T_MULTA *)calloc(n_multas,sizeof(T_MULTA));
-			   if(v_radares==NULL||v_multas==NULL){
-			       printf("\nError guardando menoria dinamica");
-			   }
-			   else{
-			       CargaRadaresManual(v_radares,n_radares);
-			       CargaMultasManual(v_multas,n_multas);
-			       multas_totales= CalculaMultas(v_multas, n_multas, v_radares, n_radares);
-			       printf("\nEl valor total de la sancion impuesta es: %.2f",multas_totales);
-			       free(v_radares);
-			       free(v_multas);
-			   }
+            do {
+                printf("\nIntroduce el numero de radares: ");
+                scanf(" %d", &n_radares);
+                if (n_radares <= 0) {
+                    printf("\nDebe ser positivo");
+                }
+            } while (n_radares <= 0);
 
-			break;
-            
-		case 2:
-			printf("\nFuncion segundo programa");
-            
-            do{
-               printf("\nIntroduce el numero de multas: ");
-               scanf("%d",&n_multas);
-               if(n_multas<=0){
-                   printf("\nDebe ser positivo");
-               }
-           }while(n_multas<=0);
-            //memoria dinamica
-            v_multas=(T_ALCOHOL *)calloc(n_multas,sizeof(T_ALCOHOL));
-			if(v_multas==NULL){
-               printf("\nError guardando menoria dinamica");
+            //pide el numero de multas y se repite hasta que el numero sea posivo
+            do {
+                printf("\nIntroduce el numero de multas: ");
+                scanf(" %d", &n_multas);
+                if (n_multas <= 0) {
+                    printf("\nDebe ser positivo");
+                }
+            } while (n_multas <= 0);
+
+            v_radares = (T_RADAR *) calloc(n_radares, sizeof(T_RADAR));
+            v_multas = (T_MULTA *) calloc(n_multas, sizeof(T_MULTA));
+            if (v_radares == NULL || v_multas == NULL) {
+                printf("\nError guardando menoria dinamica");
+            } else {
+                CargaRadaresManual(v_radares, n_radares);
+                CargaMultasManual(v_multas, n_multas);
+                multas_totales = CalculaMultas(v_multas, n_multas, v_radares, n_radares);
+                printf("\nEl valor total de las sanciones impuestas es: %.2f euros", multas_totales);
+                free(v_radares);
+                free(v_multas);
             }
-            else{
-            CargarMultaAlcohol(v_multas,n_multas);
-            printf("\nEl valor total de la sancion impuesta es: %.2f",multas_totales);
-            free(v_multas);
-            break;
-            
-            default:
-            printf("\nError");
-    }
-   return 0;
-}
 
+            break;
+
+        case 2:
+            printf("\nFuncion segundo programa");
+
+            do {
+                printf("\nIntroduce el numero de multas: ");
+                scanf(" %d", &n_multas);
+                if (n_multas <= 0) {
+                    printf("\nDebe ser positivo");
+                }
+            } while (n_multas <= 0);
+            //memoria dinamica
+            v_multas = (T_ALCOHOL *) calloc(n_multas, sizeof(T_ALCOHOL));
+            if (v_multas == NULL) {
+                printf("\nError guardando menoria dinamica");
+            } else {
+                CargarMultaAlcohol(v_multas, n_multas);
+                printf("\nEl valor total de las sanciones impuestas es: %.2f euros", CalcularMultaAlcohol(v_multas, n_multas));
+
+                free(v_multas);
+                break;
+
+                default:
+                    printf("\nError");
+            }
+            return 0;
+    }
+
+}
 
 void CargaRadaresManual(T_RADAR *radares, int num_radares){
     int i;
@@ -146,15 +147,15 @@ void CargaMultasManual(T_MULTA *multas,int num_multas){
 //para introducir todos los datos q componen el rardar
 void RellenarUnRadar(T_RADAR *prad){
     printf("\nIntroduce el identificador del radar: ");
-    scanf("%d",&(prad->id_radar));
+    scanf(" %d",&(prad->id_radar));
     printf("\nIntroduce la velocidad limite: ");
-    scanf("%d",&(prad->velocidad_limite));
+    scanf(" %d",&(prad->velocidad_limite));
     printf("\nIntroduce la cantidad en el umbral 0-20: ");
-    scanf("%d",&(prad->umbral20));
+    scanf(" %d",&(prad->umbral20));
     printf("\nIntroduce la cantidad en el umbral de 20-40: ");
-    scanf("%d",&(prad->umbral40));
+    scanf(" %d",&(prad->umbral40));
     printf("\nIntroduce la cantidad en el umbral >40: ");
-    scanf("%d",&(prad->umbral_resto));
+    scanf(" %d",&(prad->umbral_resto));
     return;
 }
 
@@ -163,64 +164,64 @@ void RellenarUnaMulta(T_MULTA *pmul){
     T_FECHA fecha;
     RellenarFecha(&fecha);
     printf("\nIntroduce el numero identificador del radar: ");
-    scanf("%d", &(pmul->id_radar));
+    scanf(" %d", &(pmul->id_radar));
     printf("\nIntroduce la matricula: ");
-    scanf("%Ns", &(pmul->matricula));
+    scanf(" %s", &(pmul->matricula));
     printf("\nIntroduce la velocidad: ");
-    scanf("%d", &(pmul->velocidad));
+    scanf(" %d", &(pmul->velocidad));
     return;
 }
 
 int BuscarIndiceRadar(int identificador_radar,T_RADAR*radares,int num_radares)
-{	
-   int i;
-   int indice;
-   indice=-1;
-   i=0;
-   while(i<num_radares&&indice==-1){
-       if(radares[i].id_radar==identificador_radar){
-           indice=i;
-       }
-       i++;
-   }
-   return indice;
+{
+    int i;
+    int indice;
+    indice=-1;
+    i=0;
+    while(i<num_radares&&indice==-1){
+        if(radares[i].id_radar==identificador_radar){
+            indice=i;
+        }
+        i++;
+    }
+    return indice;
 }
 
 
 float CalculaMultas(T_MULTA *multas,int num_multas,T_RADAR *radares,int num_radares)
 {
-   int i;
-   float res;
-   int indice;
-   int diferencia;
-   float umbral;
-   res=0;
-   for(i=0;i<num_multas;i++){
-       indice=BuscarIndiceRadar(multas[i].id_radar,radares,num_radares);
-       if(indice==-1){
-           printf("\nEl identificador %d no existe",multas[i].id_radar);
-       }
-       else{
-           diferencia=multas[i].velocidad-radares[indice].velocidad_limite;
-           if(diferencia>0){
-               umbral=diferencia*100/(float)radares[indice].velocidad_limite;
-               if(umbral>0&&umbral<=20){
-                   multas[i].sancion=radares[indice].umbral20;
-               }
-               else{
-                   if(umbral>20&&umbral<=40){
-                       multas[i].sancion=radares[indice].umbral40;
-                   }
-                   else{
-                           multas[i].sancion=radares[indice].umbral_resto;
-                   }
-               }
-               res=res+multas[i].sancion;
-               printf("\nLa sancion del vehiculo %s ha sido de %.f euros",multas[i].matricula,multas[i].sancion);
-           }
-       }
-   }
-   return res;
+    int i;
+    float res;
+    int indice;
+    int diferencia;
+    float umbral;
+    res=0;
+    for(i=0;i<num_multas;i++){
+        indice=BuscarIndiceRadar(multas[i].id_radar,radares,num_radares);
+        if(indice==-1){
+            printf("\nEl identificador %d no existe",multas[i].id_radar);
+        }
+        else{
+            diferencia=multas[i].velocidad-radares[indice].velocidad_limite;
+            if(diferencia>0){
+                umbral=diferencia*100/(float)radares[indice].velocidad_limite;
+                if(umbral>0&&umbral<=20){
+                    multas[i].sancion=radares[indice].umbral20;
+                }
+                else{
+                    if(umbral>20&&umbral<=40){
+                        multas[i].sancion=radares[indice].umbral40;
+                    }
+                    else{
+                        multas[i].sancion=radares[indice].umbral_resto;
+                    }
+                }
+                res=res+multas[i].sancion;
+                printf("\nLa sancion del vehiculo %s ha sido de %.f euros",multas[i].matricula,multas[i].sancion);
+            }
+        }
+    }
+    return res;
 }
 
 
@@ -228,11 +229,11 @@ float CalculaMultas(T_MULTA *multas,int num_multas,T_RADAR *radares,int num_rada
 void RellenarFecha(T_FECHA *pfecha){
     printf("\nIntroduce la fecha:");
     printf("\nDia: ");
-    scanf("%d", &(pfecha->dia));
+    scanf(" %d", &(pfecha->dia));
     printf("\nMes: ");
-    scanf("%d", &(pfecha->mes));
+    scanf(" %d", &(pfecha->mes));
     printf("\nAnio: ");
-    scanf("%d", &(pfecha->anio));
+    scanf(" %d", &(pfecha->anio));
     return;
 }
 
@@ -246,50 +247,55 @@ void CargarMultaAlcohol(T_ALCOHOL *multas,int num_multas){
 }
 
 void RellenarMultaAlcohol(T_ALCOHOL *palc){
-    T_FECHA fecha; 
+    T_FECHA fecha;
     RellenarFecha(&fecha);
-    printf("\nIntroduce el dni: ");
-    scanf("%9s", &(palc->dni));
+    char res;
+    printf("\nIntroduce el dni(Con letra): ");
+    scanf(" %s", &(palc->dni));
+
     printf("\nIntroduce la tasa de alcohol del conductor: ");
-    scanf("%f", &(palc->tasa));
+    scanf(" %f", &(palc->tasa));
+
+    printf("\n¿Es nobel el conductor?\n\ts (si la respuesta es SI)\n\tn (si la respuesta es NO)\n");
+    scanf(" %c", &(palc->nobel));
+
     return;
 }
 
 float CalcularMultaAlcohol(T_ALCOHOL *multas,int num_multas){
-    char op;
     int i;
-    float tasa;
-    float res;
-    
-    printf("\n¿Es noble el conductor?: s(si la respuesta es SI) o no(si la respuesta es NO)\n");
-    scanf("%c", &op);
-    
-    //no se si poner el bucle for fuera del switch o dentro de cada caso para q recorra las multas indicadas anteriormente
-    switch(op){
-        case 's':
+    float res = 0.0;
+
+    for (i = 0; i < num_multas; ++i) {
+
+        switch(multas[i].nobel){
+            case 's':
                 if(multas[i].tasa<0.15){
                     multas[i].sancion = 0;
                 }else if(multas[i].tasa>0.15 && multas[i].tasa<=0.30){
                     multas[i].sancion = 500;
-                }else if(multas[i].tasa>0.3 && multas[i].tasa<=0.6){
+                }else if(multas[i].tasa>0.3 && multas[i].tasa<=0.6){ //Rellenar el programa poniendo que si es superior a 0.6 la multa es superior
                     multas[i].sancion = 1000;
                 }
                 break;
-                
-        case 'n':
+
+            case 'n':
                 if(multas[i].tasa<0.25){
                     multas[i].sancion = 0;
                 }else if(multas[i].tasa>0.25 && multas[i].tasa<=0.5){
                     multas[i].sancion = 500;
-                }else if(multas[i].tasa>0.5 && multas[i].tasa<=0.6){
+                }else if(multas[i].tasa>0.5 && multas[i].tasa<=0.6){ //Rellenar el programa poniendo que si es superior a 0.6 la multa es superior
                     multas[i].sancion = 1000;
                 }
                 break;
-                
-        default:
+
+            default:
                 printf("\nError");
+        }
+        res=res+multas[i].sancion;
+        printf("\nLa sancion de la persona con DNI: %s ha sido de %.f euros",multas[i].dni, multas[i].sancion);
+
     }
-    res=res+multas[i].sancion;
-    printf("\nLa sancion de la persona con DNI: %s ha sido de %.f euros",multas[i].dni, multas[i].sancion);
+    printf("\n");
     return res;
 }
