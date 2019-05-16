@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #define N 8
 
 // estructuras
@@ -42,6 +43,7 @@ int BuscarIndiceRadar(int identificador_radar, T_RADAR *radares, int num_radares
 void RellenarMultaAlcohol(T_ALCOHOL *palc);
 void CargarMultaAlcohol(T_ALCOHOL *multas, int num_multas);
 float CalcularMultaAlcohol(T_ALCOHOL *multas, int num_multas);
+void pedirDni(T_ALCOHOL *palc);
 
 
 int main() {
@@ -101,7 +103,7 @@ int main() {
 
         case 2:
             printf("\nFuncion segundo programa");
-			//Pide el numero de multas y se repite hasta que sea un numero positivo
+            //Pide el numero de multas y se repite hasta que sea un numero positivo
             do {
                 printf("\nIntroduce el numero de multas: ");
                 scanf(" %d", &n_multas);
@@ -245,47 +247,23 @@ void CargarMultaAlcohol(T_ALCOHOL *multas,int num_multas){
     }
     return;
 }
+
 //Te pide los datos necesarios para rellenar la multa de dicho conductor
 void RellenarMultaAlcohol(T_ALCOHOL *palc){
     T_FECHA fecha;
     RellenarFecha(&fecha);
     char res;
-    
-    printf("\nIntroduce el dni(Con letra): ");{
-    scanf(" %s", &(palc->dni)); //Creo que tengo cambiar el (palc->dni) por el (strlen(dni)
-	if(strlen(dni)<9) {
-		return "DNI demasiado corto.";
-	}
-	
-	dni = strtoupper(dni);
- 
-	letra = substr(dni, -1, 1);
-	numero = substr(dni, 0, 8);
-		
-	// Si es un NIE hay que cambiar la primera letra por 0, 1 Û 2 dependiendo de si es X, Y o Z.
-	numero = str_replace(array('X', 'Y', 'Z'), array(0, 1, 2), numero);	
- 
-	modulo = numero % 23;
-	letras_validas = "TRWAGMYFPDXBNJZSQVHLCKE";
-	letra_correcta = substr(letras_validas, modulo, 1);
-	
-	if(letra_correcta!=letra) { // Despues de saber que la letra es incorrecta no quiero que me diga cual es la letra 
-	 							//sino que me diga que ese dni no existe y que me pida introducirle de nuevo
-		return "Letra incorrecta, la letra deber&iacute;a ser la $letra_correcta."; //
-	}
-	else {
-		return "OK";
-	}
-}
+    pedirDni(palc);
+
     printf("\nIntroduce la tasa de alcohol del conductor: ");
     scanf(" %f", &(palc->tasa));
 
-    printf("\nøEs nobel el conductor?\n\ts (si la respuesta es SI)\n\tn (si la respuesta es NO)\n");
+    printf("\n¬øEs nobel el conductor?\n\ts (si la respuesta es SI)\n\tn (si la respuesta es NO)\n");
     scanf(" %c", &(palc->nobel));
 
     return;
 }
-// Te calcula las multas segun si el conductor es nobel o no  
+// Te calcula las multas segun si el conductor es nobel o no
 float CalcularMultaAlcohol(T_ALCOHOL *multas,int num_multas){
     int i;
     float res = 0.0;
@@ -298,11 +276,11 @@ float CalcularMultaAlcohol(T_ALCOHOL *multas,int num_multas){
                     multas[i].sancion = 0;
                 }else if(multas[i].tasa>0.15 && multas[i].tasa<=0.30){
                     multas[i].sancion = 500;
-                }else if(multas[i].tasa>0.3 && multas[i].tasa<=0.6){ 
+                }else if(multas[i].tasa>0.3 && multas[i].tasa<=0.6){
                     multas[i].sancion = 1000;
                 }else if(multas[i].tasa>0.6){
                     multas[i].sancion = 6000;
-				}
+                }
                 break;
 
             case 'n':
@@ -310,11 +288,11 @@ float CalcularMultaAlcohol(T_ALCOHOL *multas,int num_multas){
                     multas[i].sancion = 0;
                 }else if(multas[i].tasa>0.25 && multas[i].tasa<=0.5){
                     multas[i].sancion = 500;
-                }else if(multas[i].tasa>0.5 && multas[i].tasa<=0.6){ 
+                }else if(multas[i].tasa>0.5 && multas[i].tasa<=0.6){
                     multas[i].sancion = 1000;
                 }else if(multas[i].tasa>0.6){
                     multas[i].sancion = 6000;
-				}
+                }
                 break;
 
             default:
@@ -326,4 +304,30 @@ float CalcularMultaAlcohol(T_ALCOHOL *multas,int num_multas){
     }
     printf("\n");
     return res;
+}
+
+void pedirDni(T_ALCOHOL *palc){
+    int dniIncorrecto=1;
+    do {
+        printf("\nIntroduce el dni (Con letra mayuscula): ");
+        scanf(" %s", &(palc->dni));
+        if (strlen(palc->dni) != 9) {
+            printf("\nDni err√≥neo\n");
+        } else {
+            char letras[]={'T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'};
+            char letra;
+            int numero;
+            sscanf(palc->dni,"%d%c",&numero,&letra);
+            if(letra==letras[numero%23])
+            {
+                printf("\nEl DNI es correcto\n");
+                dniIncorrecto = 0;
+            }
+            else
+            {
+                printf("\nDni err√≥neo\n");
+            }
+        }
+
+    }while(dniIncorrecto);
 }
