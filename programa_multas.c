@@ -53,7 +53,7 @@ int main() {
     int n_radares;
     float multas_totales;
 
-    //En caso de no elegir ni la primera ni la segunda vuelve a preguntar
+    //Te da a elegir entre dos programas, en caso de no elegir ni la primera ni la segunda vuelve a preguntar
     do {
         printf("Elige programa: Multas por velocidad(1) o multas por alcohol(2) \n");
         scanf(" %i", &op);
@@ -101,7 +101,7 @@ int main() {
 
         case 2:
             printf("\nFuncion segundo programa");
-
+			//Pide el numero de multas y se repite hasta que sea un numero positivo
             do {
                 printf("\nIntroduce el numero de multas: ");
                 scanf(" %d", &n_multas);
@@ -110,11 +110,11 @@ int main() {
                 }
             } while (n_multas <= 0);
             //memoria dinamica
-            v_multas = (T_ALCOHOL *) calloc(n_multas, sizeof(T_ALCOHOL));
+            v_multas = (T_ALCOHOL *) calloc (n_multas, sizeof(T_ALCOHOL));
             if (v_multas == NULL) {
                 printf("\nError guardando menoria dinamica");
             } else {
-                CargarMultaAlcohol(v_multas, n_multas);
+                CargarMultaAlcohol(v_multas, n_multas); //Te calcula el valor total de todas las multas puestas
                 printf("\nEl valor total de las sanciones impuestas es: %.2f euros", CalcularMultaAlcohol(v_multas, n_multas));
 
                 free(v_multas);
@@ -144,7 +144,7 @@ void CargaMultasManual(T_MULTA *multas,int num_multas){
     return;
 }
 
-//para introducir todos los datos q componen el rardar
+//Para introducir todos los datos que componen el rardar tantas veces como radaras hayas puesto anteriormente
 void RellenarUnRadar(T_RADAR *prad){
     printf("\nIntroduce el identificador del radar: ");
     scanf(" %d",&(prad->id_radar));
@@ -159,7 +159,7 @@ void RellenarUnRadar(T_RADAR *prad){
     return;
 }
 
-//introduce todos los datos q cumponen la multa
+//introduce todos los datos que componen la multa
 void RellenarUnaMulta(T_MULTA *pmul){
     T_FECHA fecha;
     RellenarFecha(&fecha);
@@ -245,7 +245,7 @@ void CargarMultaAlcohol(T_ALCOHOL *multas,int num_multas){
     }
     return;
 }
-
+//Te pide los datos necesarios para rellenar la multa de dicho conductor
 void RellenarMultaAlcohol(T_ALCOHOL *palc){
     T_FECHA fecha;
     RellenarFecha(&fecha);
@@ -256,12 +256,12 @@ void RellenarMultaAlcohol(T_ALCOHOL *palc){
     printf("\nIntroduce la tasa de alcohol del conductor: ");
     scanf(" %f", &(palc->tasa));
 
-    printf("\nÂ¿Es nobel el conductor?\n\ts (si la respuesta es SI)\n\tn (si la respuesta es NO)\n");
+    printf("\n¿Es nobel el conductor?\n\ts (si la respuesta es SI)\n\tn (si la respuesta es NO)\n");
     scanf(" %c", &(palc->nobel));
 
     return;
 }
-
+// Te calcula las multas segun si el conductor es nobel o no  
 float CalcularMultaAlcohol(T_ALCOHOL *multas,int num_multas){
     int i;
     float res = 0.0;
