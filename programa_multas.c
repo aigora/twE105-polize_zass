@@ -274,9 +274,11 @@ float CalcularMultaAlcohol(T_ALCOHOL *multas,int num_multas){
                     multas[i].sancion = 0;
                 }else if(multas[i].tasa>0.15 && multas[i].tasa<=0.30){
                     multas[i].sancion = 500;
-                }else if(multas[i].tasa>0.3 && multas[i].tasa<=0.6){ //Rellenar el programa poniendo que si es superior a 0.6 la multa es superior
+                }else if(multas[i].tasa>0.3 && multas[i].tasa<=0.6){ 
                     multas[i].sancion = 1000;
-                }
+                }else if(multas[i].tasa>0.6){
+                    multas[i].sancion = 6000;
+				}
                 break;
 
             case 'n':
@@ -284,9 +286,11 @@ float CalcularMultaAlcohol(T_ALCOHOL *multas,int num_multas){
                     multas[i].sancion = 0;
                 }else if(multas[i].tasa>0.25 && multas[i].tasa<=0.5){
                     multas[i].sancion = 500;
-                }else if(multas[i].tasa>0.5 && multas[i].tasa<=0.6){ //Rellenar el programa poniendo que si es superior a 0.6 la multa es superior
+                }else if(multas[i].tasa>0.5 && multas[i].tasa<=0.6){ 
                     multas[i].sancion = 1000;
-                }
+                }else if(multas[i].tasa>0.6){
+                    multas[i].sancion = 6000;
+				}
                 break;
 
             default:
