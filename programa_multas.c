@@ -129,7 +129,7 @@ int main() {
     }
 
 }
-
+//funcion para cargar radares
 void CargaRadaresManual(T_RADAR *radares, int num_radares){
     int i;
     for(i=0; i<num_radares; i++){
@@ -137,7 +137,7 @@ void CargaRadaresManual(T_RADAR *radares, int num_radares){
     }
     return;
 }
-
+// funcion para cargar multas
 void CargaMultasManual(T_MULTA *multas,int num_multas){
     int i;
     for(i=0; i<num_multas; i++){
@@ -190,7 +190,7 @@ int BuscarIndiceRadar(int identificador_radar,T_RADAR*radares,int num_radares)
     return indice;
 }
 
-
+//funcion calcula multas
 float CalculaMultas(T_MULTA *multas,int num_multas,T_RADAR *radares,int num_radares)
 {
     int i;
@@ -240,7 +240,7 @@ void RellenarFecha(T_FECHA *pfecha){
     return;
 }
 
-
+//funcion para cargar multas por alcohol
 void CargarMultaAlcohol(T_ALCOHOL *multas,int num_multas){
     int i;
     for(i=0; i<num_multas; i++){
@@ -311,7 +311,7 @@ float CalcularMultaAlcohol(T_ALCOHOL *multas,int num_multas){
     printf("\n");
     return res;
 }
-
+//funcion en la que te pide el dni
 void pedirDni(T_ALCOHOL *palc){ //Te pide el dni y comprueba si el dni es correcto o no , sino te le pide hasta que sea un dni valido
     int dniIncorrecto=1;
     do {
