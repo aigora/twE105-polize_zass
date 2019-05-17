@@ -141,6 +141,7 @@ void CargaRadaresManual(T_RADAR *radares, int num_radares){
 void CargaMultasManual(T_MULTA *multas,int num_multas){
     int i;
     for(i=0; i<num_multas; i++){
+        printf("\n MULTA %d", i+1);
         RellenarUnaMulta(&multas[i]);
     }
     return;
@@ -243,6 +244,7 @@ void RellenarFecha(T_FECHA *pfecha){
 void CargarMultaAlcohol(T_ALCOHOL *multas,int num_multas){
     int i;
     for(i=0; i<num_multas; i++){
+        printf("\n MULTA %d", i+1);
         RellenarMultaAlcohol(&multas[i]);
     }
     return;
@@ -257,10 +259,14 @@ void RellenarMultaAlcohol(T_ALCOHOL *palc){
 
     printf("\nIntroduce la tasa de alcohol del conductor: ");
     scanf(" %f", &(palc->tasa));
-
-    printf("\n¿Es nobel el conductor?\n\ts (si la respuesta es SI)\n\tn (si la respuesta es NO)\n");
-    scanf(" %c", &(palc->nobel));
-
+    do{
+        printf("\n¿Es nobel el conductor?\n\ts (si la respuesta es SI)\n\tn (si la respuesta es NO)\n");
+        scanf(" %c", &(palc->nobel));
+        if (palc->nobel != 's' && palc->nobel != 'n') {
+            printf("Error, seleccione correctamente la opcion\n\n");
+        }
+    } while (palc->nobel != 's' && palc->nobel != 'n');
+    
     return;
 }
 // Te calcula las multas segun si el conductor es nobel o no
