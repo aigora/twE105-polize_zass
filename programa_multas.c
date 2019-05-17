@@ -174,7 +174,7 @@ void RellenarUnaMulta(T_MULTA *pmul){
     scanf(" %d", &(pmul->velocidad));
     return;
 }
-
+//funcion para identificar el radar
 int BuscarIndiceRadar(int identificador_radar,T_RADAR*radares,int num_radares)
 {
     int i;
@@ -228,7 +228,7 @@ float CalculaMultas(T_MULTA *multas,int num_multas,T_RADAR *radares,int num_rada
 }
 
 
-
+//funcion para rellenar la estructura de la fecha
 void RellenarFecha(T_FECHA *pfecha){
     printf("\nIntroduce la fecha:");
     printf("\nDia: ");
@@ -259,12 +259,13 @@ void RellenarMultaAlcohol(T_ALCOHOL *palc){
 
     printf("\nIntroduce la tasa de alcohol del conductor: ");
     scanf(" %f", &(palc->tasa));
+    //eliges entre nobel o no nobel y si no eliges correctamente te lo vuelve a preguntar
     do{
         printf("\n¿Es nobel el conductor?\n\ts (si la respuesta es SI)\n\tn (si la respuesta es NO)\n");
         scanf(" %c", &(palc->nobel));
         if (palc->nobel != 's' && palc->nobel != 'n') {
             printf("Error, seleccione correctamente la opcion\n\n");
-        }
+        } 
     } while (palc->nobel != 's' && palc->nobel != 'n');
     
     return;
@@ -334,6 +335,6 @@ void pedirDni(T_ALCOHOL *palc){ //Te pide el dni y comprueba si el dni es correc
                 printf("\nDni erróneo\n");
             }
         }
-
+        
     }while(dniIncorrecto);
 }
