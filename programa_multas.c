@@ -318,7 +318,7 @@ void pedirDni(T_ALCOHOL *palc){ //Te pide el dni y comprueba si el dni es correc
         printf("\nIntroduce el dni (Con letra mayuscula): ");
         scanf(" %s", &(palc->dni));
         if (strlen(palc->dni) != 9) {
-            printf("\nDni erróneo\n");
+            printf("\nDni erroneo\n");
         } else {
             char letras[]={'T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'};
             char letra;
@@ -331,7 +331,7 @@ void pedirDni(T_ALCOHOL *palc){ //Te pide el dni y comprueba si el dni es correc
             }
             else
             {
-                printf("\nDni erróneo\n");
+                printf("\nDni erroneo\n");
             }
         }
 
