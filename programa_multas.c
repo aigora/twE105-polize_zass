@@ -51,7 +51,7 @@ int main() {
     T_RADAR *v_radares;
     T_MULTA *v_multas;
     T_ALCOHOL *v_alcohol;
-    int op;
+    int op, op2;
     int n_multas;
     int n_radares;
     float multas_totales;
@@ -68,40 +68,61 @@ int main() {
     switch (op) {
         case 1:
             printf("\nFuncion primer programa: multas por velocidad");
-
-            //pide el numero de radares y se repite hasta que sea un numero positivo
-            do {
-                printf("\nIntroduce el numero de radares: ");
-                scanf(" %d", &n_radares);
-                if (n_radares <= 0) {
-                    printf("\nDebe ser positivo");
+            
+            do{
+                printf("\nElige entre: introducir las multas manualmete(1) o introducir multas automaticamente(2)");
+                scanf("%i", &op2);
+                if (op2 != 1 && op2 != 2){
+                    printf("Error, el programa selecionado no existe\n\n");
                 }
-            } while (n_radares <= 0);
+            }while (op2 != 1 && op2 != 2);
+            
+            switch (op2){
+                case 1:
+                    printf("\nFuncion multas por radar -> carga manual");
+                    //pide el numero de radares y se repite hasta que sea un numero positivo
+                    do {
+                        printf("\nIntroduce el numero de radares: ");
+                        scanf(" %d", &n_radares);
+                        if (n_radares <= 0) {
+                            printf("\nDebe ser positivo");
+                        }
+                    } while (n_radares <= 0);
 
-            //pide el numero de multas y se repite hasta que el numero sea posivo
-            do {
-                printf("\nIntroduce el numero de multas: ");
-                scanf(" %d", &n_multas);
-                if (n_multas <= 0) {
-                    printf("\nDebe ser positivo");
-                }
-            } while (n_multas <= 0);
+                    //pide el numero de multas y se repite hasta que el numero sea posivo
+                    do {
+                        printf("\nIntroduce el numero de multas: ");
+                        scanf(" %d", &n_multas);
+                        if (n_multas <= 0) {
+                            printf("\nDebe ser positivo");
+                        }
+                    } while (n_multas <= 0);
 
-            //memoria dimanica para vector de radares y multas
-            v_radares = (T_RADAR *) calloc(n_radares, sizeof(T_RADAR));
-            v_multas = (T_MULTA *) calloc(n_multas, sizeof(T_MULTA));
-            if (v_radares == NULL || v_multas == NULL) {
-                printf("\nError guardando menoria dinamica");
-            } else {
-                CargaRadaresManual(v_radares, n_radares);
-                CargaMultasManual(v_multas, n_multas);
-                multas_totales = CalculaMultas(v_multas, n_multas, v_radares, n_radares);
-                printf("\nEl valor total de las sanciones impuestas es: %.2f euros", multas_totales);
-                free(v_radares);
-                free(v_multas);
+                    //memoria dimanica para vector de radares y multas
+                    v_radares = (T_RADAR *) calloc(n_radares, sizeof(T_RADAR));
+                    v_multas = (T_MULTA *) calloc(n_multas, sizeof(T_MULTA));
+                    if (v_radares == NULL || v_multas == NULL) {
+                        printf("\nError guardando menoria dinamica");
+                    } else {
+                        CargaRadaresManual(v_radares, n_radares);
+                        CargaMultasManual(v_multas, n_multas);
+                        multas_totales = CalculaMultas(v_multas, n_multas, v_radares, n_radares);
+                        printf("\nEl valor total de las sanciones impuestas es: %.2f euros", multas_totales);
+                        free(v_radares);
+                        free(v_multas);
+                    }
+
+                    break;
+                    
+                case 2:
+                    printf("\nFuncion multas por radar -> carga automatica");
+                    
+                    
+                    break;
+
+                default:
+                    printf("\nError");
             }
-
-            break;
 
         case 2:
             printf("\nFuncion segundo programa: multas por alcoholemia");
