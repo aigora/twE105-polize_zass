@@ -50,6 +50,7 @@ int main() {
 
     T_RADAR *v_radares;
     T_MULTA *v_multas;
+    T_ALCOHOL *v_alcohol;
     int op;
     int n_multas;
     int n_radares;
@@ -113,14 +114,14 @@ int main() {
                 }
             } while (n_multas <= 0);
             //memoria dinamica para vetor multas
-            v_multas = (T_ALCOHOL *) calloc (n_multas, sizeof(T_ALCOHOL));
-            if (v_multas == NULL) {
+            v_alcohol = (T_ALCOHOL *) calloc(n_multas, sizeof(T_ALCOHOL));
+            if (v_alcohol == NULL) {
                 printf("\nError guardando menoria dinamica");
             } else {
-                CargarMultaAlcohol(v_multas, n_multas); 
-                printf("\nEl valor total de las sanciones impuestas es: %.2f euros", CalcularMultaAlcohol(v_multas, n_multas));
+                CargarMultaAlcohol(v_alcohol, n_multas); 
+                printf("\nEl valor total de las sanciones impuestas es: %.2f euros", CalcularMultaAlcohol(v_alcohol, n_multas));
 
-                free(v_multas);
+                free(v_alcohol);
                 break;
 
                 default:
@@ -170,7 +171,8 @@ void RellenarUnaMulta(T_MULTA *pmul){
     printf("\nIntroduce el numero identificador del radar: ");
     scanf(" %d", &(pmul->id_radar));
     printf("\nIntroduce la matricula: ");
-    scanf(" %s", &(pmul->matricula));
+    fflush(stdin);
+    fgets(pmul->matricula,N,stdin);
     printf("\nIntroduce la velocidad: ");
     scanf(" %d", &(pmul->velocidad));
     return;
@@ -317,7 +319,8 @@ void pedirDni(T_ALCOHOL *palc){
     int dniIncorrecto=1;
     do {
         printf("\nIntroduce el dni (Con letra mayuscula): ");
-        scanf(" %s", &(palc->dni));
+        fflush(stdin);
+        fgets(palc->dni,N,stdin);
         if (strlen(palc->dni) != 9) {
             printf("\nDni erroneo\n");
         } else {
