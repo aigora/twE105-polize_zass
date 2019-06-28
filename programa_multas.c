@@ -5,17 +5,18 @@
 
 // estructuras
 typedef struct {
-    int id_radar;
-    char matricula[N];
-    int velocidad;
-    float sancion;
-}T_MULTA;
-
-typedef struct {
     int dia;
     int mes;
     int anio;
 }T_FECHA;
+
+typedef struct {
+    int id_radar;
+    char matricula[N];
+    int velocidad;
+    float sancion;
+    T_FECHA fecha;
+}T_MULTA;
 
 typedef struct {
     int id_radar;
@@ -40,6 +41,10 @@ void RellenarUnaMulta(T_MULTA *pmul);
 void RellenarFecha(T_FECHA *pfecha);
 float CalculaMultas(T_MULTA *multas, int num_multas, T_RADAR *radares, int num_radares);
 int BuscarIndiceRadar(int identificador_radar, T_RADAR *radares, int num_radares);
+void CargaRadaresFichero(FILE *f_radares,T_RADAR *radares,int num_radares);
+void CargaMultasFichero(FILE *f_multas,T_MULTA *multas,int num_radares);
+void CalculaNumRadares(FILE *f_radares,int *num_radares);
+void CalculaNumMultas(FILE *f_multas,int *num_multas);
 void RellenarMultaAlcohol(T_ALCOHOL *palc);
 void CargarMultaAlcohol(T_ALCOHOL *multas, int num_multas);
 float CalcularMultaAlcohol(T_ALCOHOL *multas, int num_multas);
@@ -55,6 +60,8 @@ int main() {
     int n_multas;
     int n_radares;
     float multas_totales;
+    FILE *pf_multas;
+    FILE *pf_radares;
 
     //Te da a elegir entre dos programas, en caso de no elegir ni la primera ni la segunda vuelve a preguntar
     do {
@@ -70,7 +77,7 @@ int main() {
             printf("\nFuncion primer programa: multas por velocidad");
             
             do{
-                printf("\nElige entre: introducir las multas manualmete(1) o introducir multas automaticamente(2)");
+                printf("\nElige entre: introducir las multas manualmete(1) o introducir multas automaticamente(2)\n");
                 scanf("%i", &op2);
                 if (op2 != 1 && op2 != 2){
                     printf("Error, el programa selecionado no existe\n\n");
@@ -117,12 +124,48 @@ int main() {
                 case 2:
                     printf("\nFuncion multas por radar -> carga automatica");
                     
-                    
+                    pf_multas=fopen("multas.txt","r");
+                    pf_radares=fopen("radares.txt","r");
+                    if(pf_multas==NULL||pf_radares==NULL){
+                        printf("\nError abriendo los archivos");
+                        if(pf_multas==NULL){
+                            fclose(pf_multas);
+                        }
+                        if(pf_radares==NULL){
+                            fclose(pf_radares);
+                        }
+                    }
+                    else{
+                        CalculaNumRadares(pf_radares,&n_radares);
+                        CalculaNumMultas(pf_multas,&n_multas);
+                        v_radares=(T_RADAR *)calloc(n_radares,sizeof(T_RADAR));
+                        v_multas=(T_MULTA *)calloc(n_multas,sizeof(T_MULTA));
+                        if(v_radares==NULL||v_multas==NULL){
+                            printf("\nError asignando memoria");
+                            if(v_radares!=NULL){
+                                free(v_radares);
+                            }
+                            if(v_multas!=NULL){
+                                free(v_multas);
+                            }
+                        }
+                        else{
+                            CargaRadaresFichero(pf_radares,v_radares,n_radares);
+                            CargaMultasFichero(pf_multas,v_multas,n_multas);
+                            multas_totales=CalculaMultas(v_multas,n_multas,v_radares,n_radares);
+                            printf("\nEl valor total de la sancion impuesta es: %.2f",multas_totales);
+                            free(v_radares);
+                            free(v_multas);
+                        }
+                        fclose(pf_multas);
+                        fclose(pf_multas);
+                    }
                     break;
 
                 default:
                     printf("\nError");
             }
+            return 0;
 
         case 2:
             printf("\nFuncion segundo programa: multas por alcoholemia");
@@ -261,6 +304,55 @@ void RellenarFecha(T_FECHA *pfecha){
     scanf(" %d", &(pfecha->mes));
     printf("\nAnio: ");
     scanf(" %d", &(pfecha->anio));
+    return;
+}
+
+void CalculaNumRadares(FILE *f_radares,int *num_radares)
+{
+    int cont;
+    int valor;
+    T_RADAR r;
+    cont=0;
+    do{
+        valor=fscanf(f_radares,"%d %d %d %d %d",&r.id_radar,&r.velocidad_limite,&r.umbral20,&r.umbral40,&r.umbral_resto);
+        if(valor==5){
+            cont++;
+        }
+    }while(valor==5);
+    *num_radares=cont;
+    return;
+}
+void CalculaNumMultas(FILE *f_multas,int *num_multas)
+{
+    int cont;
+    int valor;
+    T_MULTA m;
+    cont=0;
+    do{
+        valor=fscanf(f_multas,"%d %d %d %d %s %d",&m.fecha.dia,&m.fecha.mes,&m.fecha.anio,&m.id_radar,m.matricula,&m.velocidad);
+        if(valor==6){
+            cont++;
+        }
+    }while(valor==6);
+    *num_multas=cont;
+    return;
+}
+void CargaRadaresFichero(FILE *f_radares,T_RADAR *radares,int num_radares)
+{
+    int i;
+    rewind(f_radares);
+    for(i=0;i<num_radares;i++){
+        fscanf(f_radares,"%d %d %d %d %d",&(radares[i].id_radar),&(radares[i].velocidad_limite),&(radares[i].umbral20),&(radares[i].umbral40),&(radares[i].umbral_resto));
+    }
+    return;
+}
+void CargaMultasFichero(FILE *f_multas,T_MULTA *multas,int num_radares)
+{
+    int i;
+    rewind(f_multas);
+    for(i=0;i<num_radares;i++){
+        fscanf(f_multas,"%d %d %d %d %s %d",&(multas[i].fecha.dia),&(multas[i].fecha.mes),&(multas[i].fecha.anio),&(multas[i].id_radar),(multas[i].matricula),&(multas[i].velocidad));
+    }
     return;
 }
 
