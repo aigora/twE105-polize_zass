@@ -86,7 +86,7 @@ int main() {
             
             switch (op2){
                 case 1:
-                    printf("\nFuncion multas por radar -> carga manual");
+                    printf("\nFuncion multas por radar -> carga manual");//puedes seleccionar rellenar el radar manualmente
                     //pide el numero de radares y se repite hasta que sea un numero positivo
                     do {
                         printf("\nIntroduce el numero de radares: ");
@@ -122,7 +122,7 @@ int main() {
                     break;
                     
                 case 2:
-                    printf("\nFuncion multas por radar -> carga automatica");
+                    printf("\nFuncion multas por radar -> carga automatica");//se cargan los radares automaticamente a traves de los ficheros
                     
                     pf_multas=fopen("multas.txt","r");
                     pf_radares=fopen("radares.txt","r");
@@ -336,7 +336,7 @@ void CalculaNumMultas(FILE *f_multas,int *num_multas)
     }while(valor==6);
     *num_multas=cont;
     return;
-}
+} //funcion para cargar los radares con el fichero
 void CargaRadaresFichero(FILE *f_radares,T_RADAR *radares,int num_radares)
 {
     int i;
@@ -345,7 +345,7 @@ void CargaRadaresFichero(FILE *f_radares,T_RADAR *radares,int num_radares)
         fscanf(f_radares,"%d %d %d %d %d",&(radares[i].id_radar),&(radares[i].velocidad_limite),&(radares[i].umbral20),&(radares[i].umbral40),&(radares[i].umbral_resto));
     }
     return;
-}
+} //funcion para cargar las multas con el fichero
 void CargaMultasFichero(FILE *f_multas,T_MULTA *multas,int num_radares)
 {
     int i;
@@ -453,4 +453,4 @@ void pedirDni(T_ALCOHOL *palc){
         }
         
     }while(dniIncorrecto);
-}
+} //Fin de programa
